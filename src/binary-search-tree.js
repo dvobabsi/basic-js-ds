@@ -9,89 +9,87 @@ const { Node } = require('../extensions/list-tree.js');
 class BinarySearchTree {
 
   constructor() {
-    this.rootNode = null; // Initialize the root of the tree
+    this.rootNode = null;
   }
 
   root() {
-    return this.rootNode; // Return the root of the tree
+    return this.rootNode;
   }
 
   add(data) {
     const newNode = new Node(data);
 
     if (!this.rootNode) {
-      this.rootNode = newNode; // If tree is empty, set the root node
+      this.rootNode = newNode;
     } else {
-      this._addNode(this.rootNode, newNode); // Recursively find the correct position
+      this._addNode(this.rootNode, newNode);
     }
   }
 
   _addNode(node, newNode) {
     if (newNode.data < node.data) {
       if (!node.left) {
-        node.left = newNode; // Add to the left of the node
+        node.left = newNode;
       } else {
-        this._addNode(node.left, newNode); // Continue searching in the left subtree
+        this._addNode(node.left, newNode);
       }
     } else {
       if (!node.right) {
-        node.right = newNode; // Add to the right of the node
+        node.right = newNode;
       } else {
-        this._addNode(node.right, newNode); // Continue searching in the right subtree
+        this._addNode(node.right, newNode);
       }
     }
   }
 
   has(data) {
-    return this._hasNode(this.rootNode, data); // Start the search from the root
+    return this._hasNode(this.rootNode, data);
   }
 
   _hasNode(node, data) {
-    if (!node) return false; // If the node doesn't exist, return false
+    if (!node) return false;
 
     if (data === node.data) {
-      return true; // If the data is found, return true
+      return true;
     }
 
     if (data < node.data) {
-      return this._hasNode(node.left, data); // Search in the left subtree
+      return this._hasNode(node.left, data);
     } else {
-      return this._hasNode(node.right, data); // Search in the right subtree
+      return this._hasNode(node.right, data);
     }
   }
 
   find(data) {
-    return this._findNode(this.rootNode, data); // Start the search from the root
+    return this._findNode(this.rootNode, data);
   }
 
   _findNode(node, data) {
-    if (!node) return null; // If the node doesn't exist, return null
+    if (!node) return null;
 
     if (data === node.data) {
-      return node; // If the data is found, return the node
+      return node;
     }
 
     if (data < node.data) {
-      return this._findNode(node.left, data); // Search in the left subtree
+      return this._findNode(node.left, data);
     } else {
-      return this._findNode(node.right, data); // Search in the right subtree
+      return this._findNode(node.right, data);
     }
   }
 
   remove(data) {
-    this.rootNode = this._removeNode(this.rootNode, data); // Start from the root
+    this.rootNode = this._removeNode(this.rootNode, data);
   }
 
   _removeNode(node, data) {
-    if (!node) return null; // If the node doesn't exist, return null
+    if (!node) return null;
 
     if (data === node.data) {
-      // Case 1: Node has no children
       if (!node.left && !node.right) {
         return null;
       }
 
-      // Case 2: Node has one child
       if (!node.left) {
         return node.right;
       }
@@ -99,38 +97,37 @@ class BinarySearchTree {
         return node.left;
       }
 
-      // Case 3: Node has two children
-      let minNode = this._findMin(node.right); // Find the minimum node in the right subtree
-      node.data = minNode.data; // Replace the node's data with the minimum value
-      node.right = this._removeNode(node.right, minNode.data); // Remove the duplicate min node
+      let minNode = this._findMin(node.right);
+      node.data = minNode.data;
+      node.right = this._removeNode(node.right, minNode.data);
       return node;
     }
 
     if (data < node.data) {
-      node.left = this._removeNode(node.left, data); // Continue searching in the left subtree
+      node.left = this._removeNode(node.left, data);
     } else {
-      node.right = this._removeNode(node.right, data); // Continue searching in the right subtree
+      node.right = this._removeNode(node.right, data); 
     }
 
-    return node; // Return the unchanged node
+    return node;
   }
 
   min() {
-    if (!this.rootNode) return null; // If the tree is empty, return null
+    if (!this.rootNode) return null;
     let node = this.rootNode;
     while (node.left) {
-      node = node.left; // Keep going left until the smallest node is found
+      node = node.left; 
     }
-    return node.data; // Return the smallest value
+    return node.data;
   }
 
   max() {
-    if (!this.rootNode) return null; // If the tree is empty, return null
+    if (!this.rootNode) return null;
     let node = this.rootNode;
     while (node.right) {
-      node = node.right; // Keep going right until the largest node is found
+      node = node.right;
     }
-    return node.data; // Return the largest value
+    return node.data;
   }
 }
 
